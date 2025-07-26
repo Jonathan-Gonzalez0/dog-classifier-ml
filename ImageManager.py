@@ -72,7 +72,7 @@ def Create_Dataset(Main_File_Name,True_Image_Name, True_File_Name, False_Image_N
 
 def Show_Image(index, x_array, y_array, classes):
     plt.imshow(x_array[index])
-    plt.title(f"It's a {classes[index].decode("utf-8")}, defined as a {str(y_array[0,index])}.", fontsize = 18) 
+    plt.title(f"It's a {classes[index].decode('utf-8')}, defined as a {str(y_array[0,index])}.", fontsize = 18) 
     
 def RGB_Convert(image, num_of_px):
     img_resized = image.resize((num_of_px,num_of_px))
