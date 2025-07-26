@@ -1,3 +1,8 @@
 gradio
 h5py
 scikit-learn
+numpy
+tqdm
+Pillow
+os
+time
