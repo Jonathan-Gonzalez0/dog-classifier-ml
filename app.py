@@ -12,4 +12,4 @@ Dog_Model = ImageRegressor()
 
 Dog_Model.LoadModel("Dog_Classifier_Model")
 
-gr.Interface(fn = Dog_Model.ImagePredict, inputs = gr.Image(type = "pil"), outputs = "label", share = True).launch()
+gr.Interface(fn = Dog_Model.ImagePredict, inputs = gr.Image(type = "pil"), outputs = "label").launch()
