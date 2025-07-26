@@ -1,2 +1,3 @@
 gradio
 h5py
+scikit-learn
