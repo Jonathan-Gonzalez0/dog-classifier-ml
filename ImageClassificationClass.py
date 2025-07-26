@@ -145,5 +145,6 @@ class ImageRegressor:
         self.__testing_accuracy = model["testing_accuracy"][()]
         self.__true_image_name = model["TrueImageName"][()].decode()
         self.__false_image_name = model["FalseImageName"][()].decode()
+        print("Model uploaded")
         
             

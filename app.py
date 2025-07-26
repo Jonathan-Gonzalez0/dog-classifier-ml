@@ -2,7 +2,7 @@
 """
 Created on Wed Jul 23 19:59:52 2025
 
-@author: jonathan
+@author: jonathan gonzalez
 """
 
 from ImageClassificationClass import ImageRegressor
