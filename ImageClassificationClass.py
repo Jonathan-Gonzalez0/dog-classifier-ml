@@ -99,7 +99,7 @@ class ImageRegressor:
         img_array = im.RGB_Convert(image, self.__number_of_pixels)
         flattened_img_array = dm.flattened_array(img_array, 1)
         prediction, category = self.__predict(self.__w, self.__b,flattened_img_array)
-        return f"{category[0].decode("utf-8")}"
+        return f"{category[0].decode('utf-8')}"
     
     def SaveModel(self, Model_Name):
         with h5py.File(Model_Name + ".h5", 'w') as h5f:
