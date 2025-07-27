@@ -1,4 +1,4 @@
-gradio == 4.44.1
+gradio == 5.38.2
 h5py
 scikit-learn
 numpy
