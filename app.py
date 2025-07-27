@@ -8,16 +8,8 @@ Created on Wed Jul 23 19:59:52 2025
 from ImageClassificationClass import ImageRegressor
 import gradio as gr
 
-
-Dog_Model = ImageRegressor()
-Dog_Model.LoadModel("Dog_Classifier_Model")
-
 def predict_fn(image):
     print("Function called!")
-    return Dog_Model.ImagePredict(image)
+    return "Test output"
 
-gr.Interface(
-    fn=predict_fn,
-    inputs=gr.Image(type="pil"),
-    outputs="label"
-).launch(debug=True)
+gr.Interface(fn=predict_fn, inputs=gr.Image(type="pil"), outputs="label").launch(debug=True)
