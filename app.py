@@ -20,4 +20,4 @@ gr.Interface(
     fn=predict_fn,
     inputs=gr.Image(type="pil"),
     outputs="label"
-).launch()
+).launch(debug=True)
