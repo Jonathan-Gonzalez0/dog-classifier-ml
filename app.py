@@ -2,12 +2,21 @@
 """
 Created on Wed Jul 23 19:59:52 2025
 
-@author: Jonathan gonzalez
+@author: jonathan gonzalez
 """
 
+from ImageClassificationClass import ImageRegressor
 import gradio as gr
 
-def hello(image):
-    return "Hello!"
 
-gr.Interface(fn=hello, inputs=gr.Image(type="pil"), outputs="label").launch(debug=True)
+Dog_Model = ImageRegressor()
+Dog_Model.LoadModel("Dog_Classifier_Model")
+
+def predict_fn(image):
+    return Dog_Model.ImagePredict(image)
+
+gr.Interface(
+    fn=predict_fn,
+    inputs=gr.Image(type="pil"),
+    outputs="label"
+).launch()
