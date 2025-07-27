@@ -16,9 +16,8 @@ def predict_fn(image):
     print("Function called!")
     return Dog_Model.ImagePredict(image)
 
-if __name__ == "__main__":
-    gr.Interface(
-        fn=predict_fn,
-        inputs=gr.Image(type="pil"),
-        outputs="label"
-    ).launch()
+gr.Interface(
+    fn=predict_fn,
+    inputs=gr.Image(type="pil"),
+    outputs="label"
+).launch()
