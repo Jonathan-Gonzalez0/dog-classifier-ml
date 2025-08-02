@@ -5,4 +5,4 @@ numpy
 tqdm
 Pillow
 matplotlib
-seaborn
+seaborn==0.12.0
