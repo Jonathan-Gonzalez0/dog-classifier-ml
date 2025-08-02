@@ -71,8 +71,10 @@ def Create_Dataset(Main_File_Name,True_Image_Name, True_File_Name, False_Image_N
         h5f.create_dataset('false_name', data=False_Image_Name, dtype=string_dt )
 
 def Show_Image(index, x_array, y_array, classes):
+    plt.figure()
     plt.imshow(x_array[index])
     plt.title(f"It's a {classes[index].decode('utf-8')}, defined as a {str(y_array[0,index])}.", fontsize = 18) 
+    plt.show()
     
 def RGB_Convert(image, num_of_px):
     img_resized = image.resize((num_of_px,num_of_px))

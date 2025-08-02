@@ -9,6 +9,9 @@ import DatasetManager as dm
 import ClassTools as ct
 import numpy as np
 import h5py
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 class ImageRegressor:
     
@@ -68,7 +71,7 @@ class ImageRegressor:
         a = ct.sigmoid(np.dot(w.T,x)+b)
         
         for i in range(a.shape[1]):
-            if a[0,i] >= 0.5:
+            if a[0,i] >= 0.52:
                 y_prediction[0,i] = 1
                 classes.append(self.__true_image_name)
             else:
@@ -81,19 +84,46 @@ class ImageRegressor:
         self.__training_predictions, self.__training_classes = self.__predict(self.__w, self.__b, self.__training_x_array)
         self.__testing_predictions, self.__testing_classes = self.__predict(self.__w, self.__b, self.__testing_x_array)
         
-        self.__training_accuracy = 100-np.mean(abs(self.__training_y_array - self.__training_predictions))*100
-        self.__testing_accuracy = 100-np.mean(abs(self.__testing_y_array - self.__testing_predictions))*100
+        testing_accuracy = 100-np.mean(abs(self.__testing_y_array - self.__testing_predictions))*100
+
+        TP = []
+        TN = []
+        FP = []
+        FN = []
         
-        print(f"Training prediction accuracy is {self.__training_accuracy:.0f}% ")
-        print(f"Testing prediction accuracy is {self.__testing_accuracy:.0f}% ")
+        for true,pred in zip(self.__testing_y_array[0],self.__testing_predictions[0]):
+            if true == 1 and pred == 1:
+                TP.append(1)
+            if true == 1 and pred == 0:
+                FN.append(1)
+            if true == 0 and pred == 1:
+                FP.append(1)
+            if true == 0 and pred == 0:
+                TN.append(1)
+        
+        Precision = (np.sum(TP)/(np.sum(TP) + np.sum(FP)))*100
+        Recall = (np.sum(TP)/(np.sum(TP) + np.sum(FN)))*100
+        F1Score = (2 * (Precision*Recall)/(Precision + Recall))/100
+        Specifity = (np.sum(TN)/(np.sum(TN) + np.sum(FP)))*100
+        print("\n📊 Model Evaluation Metrics")
+        print("-"*37)
+        print(f"✅Accuracy    :{testing_accuracy:.0f}%")
+        print(f"🎯Precision   :{Precision:.0f}%")
+        print(f"🔁Recall      :{Recall:.0f}%")
+        print(f"📐F1Score     :{F1Score:.2f}")
+        print(f"🔒Specifity   :{Specifity:.0f}%")  
+        print("-"*37)
         
     def ShowImageTrainingPrediction(self,index):
-        #Arreglar array del codigo
+        if index > self.__x_array.shape[0] - self.__training_predictions.shape[1]-1:
+            return "Index out of bounds."
         im.Show_Image(index, self.__x_array,self.__training_predictions, self.__training_classes)
         
     def ShowImageTestingPrediction(self,index):
-        #Arreglar array del codigo
-        im.Show_Image(index, self.__x_array,self.__testing_predictions, self.__testing_classes)
+        n = (self.__x_array.shape[0] - self.__testing_predictions.shape[1])
+        if index >= self.__testing_predictions.shape[1]-1:
+            return "Index out of bounds."
+        im.Show_Image(index, self.__x_array[n:],self.__testing_predictions, self.__testing_classes)
         
     def ImagePredict(self, image):
         img_array = im.RGB_Convert(image, self.__number_of_pixels)
@@ -119,8 +149,6 @@ class ImageRegressor:
             h5f.create_dataset("number_of_pixels", data = self.__number_of_pixels)
             h5f.create_dataset("w", data = self.__w)
             h5f.create_dataset("b", data = self.__b)
-            h5f.create_dataset("training_accuracy", data = self.__training_accuracy)
-            h5f.create_dataset("testing_accuracy", data = self.__testing_accuracy)
             h5f.create_dataset("TrueImageName", data = self.__true_image_name, dtype = string_dt)
             h5f.create_dataset("FalseImageName", data = self.__false_image_name, dtype = string_dt)
             
@@ -141,10 +169,19 @@ class ImageRegressor:
         self.__number_of_pixels = model["number_of_pixels"][()]
         self.__w = model["w"][:]
         self.__b = model["b"][()]
-        self.__training_accuracy = model["training_accuracy"][()]
-        self.__testing_accuracy = model["testing_accuracy"][()]
         self.__true_image_name = model["TrueImageName"][()].decode()
         self.__false_image_name = model["FalseImageName"][()].decode()
-        print("Model uploaded")
+        print("\nModel uploaded succesfully.")
+        
+    def ConfusionMatrix(self):
+        plt.figure()
+        y_test = dm.flattened_array(self.__testing_y_array, self.__testing_y_array.shape[1])[0]
+        y_pred = dm.flattened_array(self.__testing_predictions, self.__testing_y_array.shape[1])[0]
+        cm = confusion_matrix(y_test, y_pred)
+        sns.heatmap(cm, annot = True, fmt = "d", cmap = "Blues")
+        plt.xlabel("Predicted", size = 11)
+        plt.ylabel("Actual", size = 11)
+        plt.title("Confusion Matrix", size = 18, fontweight = "bold")
+        plt.show()
         
             
