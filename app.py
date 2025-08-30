@@ -5,15 +5,15 @@ Created on Wed Jul 23 19:59:52 2025
 @author: jonathan gonzalez
 """
 
-from ImageClassificationClass import ImageRegressor
+from image_classification_class import ImageRegressor
 import gradio as gr
 
 
-Dog_Model = ImageRegressor()
-Dog_Model.LoadModel("Dog_Classifier_Model")
+dog_model = ImageRegressor()
+dog_model.load_model("dog_classifier_model")
 
 def predict_fn(image):
-    return Dog_Model.ImagePredict(image)
+    return dog_model.image_predict(image)
 
 gr.Interface(
     fn=predict_fn,
