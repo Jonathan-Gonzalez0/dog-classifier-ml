@@ -10,7 +10,7 @@ import gradio as gr
 
 
 dog_model = ImageRegressor()
-dog_model.load_model("dog_classifier_model")
+dog_model.load_model("dog_model")
 
 def predict_fn(image):
     return dog_model.image_predict(image)
