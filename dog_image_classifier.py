@@ -23,7 +23,7 @@ plt.close("all")
 
 dog_image_regressor = ImageRegressor()
 
-dog_image_regressor.create_dataset("train_dog_images", "Dog", "dog_photos", "Not a Dog", "non_dog_photos", number_of_pixels=16)
+#dog_image_regressor.create_dataset("train_dog_images", "Dog", "dog_photos", "Not a Dog", "non_dog_photos", number_of_pixels=16)
 
 x_train, y_train, classification = dog_image_regressor.load_dataset("train_dog_images.h5")
 
@@ -37,4 +37,4 @@ dog_image_regressor.show_image_testing_prediction(1) # Show image prediction fro
 
 dog_image_regressor.confusion_matrix()
 
-dog_image_regressor.save_model("dog_classifier_model")
+dog_image_regressor.save_model("dog_model")

@@ -336,13 +336,13 @@ class ImageRegressor:
         
         return prediction_label
     
-    def save_model(self, Model_Name):
+    def save_model(self, model_name):
         """
         Saves the trained model to a file for later use.
         
         Parameters
         ----------
-        Model_Name : Str
+        model_name : Str
             Name of the file to save the model. The file is saved in the same 
             directory as the class file.
             
@@ -350,7 +350,7 @@ class ImageRegressor:
         -------
         None.
         """
-        with h5py.File(Model_Name + ".h5", 'w') as h5f:
+        with h5py.File(model_name + ".h5", 'w') as h5f:
             string_dt = h5py.string_dtype(encoding = "utf-8")
             h5f.create_dataset("x_array", data = self.__x_array)
             h5f.create_dataset("training_x_array", data = self.__training_x_array)
@@ -368,20 +368,20 @@ class ImageRegressor:
             h5f.create_dataset("true_image_name", data = self.__true_image_name, dtype = string_dt)
             h5f.create_dataset("false_image_name", data = self.__false_Image_Name, dtype = string_dt)
             
-    def load_model(self, Model_Name):
+    def load_model(self, model_name):
         """
         Loads a saved model from the specified file.
         
         Parameters
         ----------
-        Model_Name : Str
+        model_name : Str
             Name of the file containing the saved model.
             
         Returns
         -------
         None.
         """
-        model = h5py.File(Model_Name + ".h5", "r")
+        model = h5py.File(model_name + ".h5", "r")
         self.__x_array = model["x_array"][:]
         self.__training_x_array = model["training_x_array"][:]
         self.__testing_x_array = model["testing_x_array"][:]
