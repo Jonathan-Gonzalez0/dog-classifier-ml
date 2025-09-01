@@ -1,0 +1,3 @@
+[submodule "dog-classifier-ml"]
+	path = dog-classifier-ml
+	url = https://github.com/Jonathan-Gonzalez0/dog-classifier-ml.git
